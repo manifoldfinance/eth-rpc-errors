@@ -2,6 +2,62 @@ import { EthereumRpcError, EthereumProviderError } from './classes';
 import { getMessageFromCode } from './utils';
 import { errorCodes } from './error-constants';
 
+
+/**
+ *
+ *  @typedef {(number)} ErrorObjectCode
+ *  @description A Number that indicates the error type that occurred. This MUST be an integer. 
+ *  The error codes from and including -32768 to -32000 are reserved for pre-defined errors. 
+ *  These pre-defined errors SHOULD be assumed to be returned from any JSON-RPC api.
+ *
+ */
+export type ErrorObjectCode = number;
+
+/**
+ *
+ *  @typedef {(string)} ErrorObjectMessage
+ *  @description A String providing a short description of the error. 
+ *  The message SHOULD be limited to a concise single sentence.
+ *
+ */
+export type ErrorObjectMessage = string;
+
+/**
+ *
+ *  @typedef {(any)} ErrorObjectData
+ *  @description A Primitive or Structured value that contains additional information about the error. 
+ *    This MAY be omitted. 
+ *  The value of this member is defined by the Server (e.g. detailed error information, nested errors etc.).
+ *
+ */
+export type ErrorObjectData = any;
+
+/**
+ *
+ * @interface ErrorObject
+ * Defines an application level error.
+ *
+ */
+export interface ErrorObject {
+  code: ErrorObjectCode;
+  message: ErrorObjectMessage;
+  data?: ErrorObjectData;
+}
+export type ErrorOrReference = ErrorObject | ReferenceObject;
+
+/**
+ * @typedef {ErrorOrReference[]} MethodObjectErrors
+ * @description Defines an application level error.
+ */
+export type MethodObjectErrors = ErrorOrReference[];
+
+
+/**
+ *
+ * @interface EthereumErrorOptions
+ * Defines an Ethereum related level error.
+ *
+ */
 interface EthereumErrorOptions<T> {
   message?: string;
   data?: T;
@@ -60,7 +116,7 @@ export const ethErrors = {
      */
     server: <T>(opts: ServerErrorOptions<T>) => {
       if (!opts || typeof opts !== 'object' || Array.isArray(opts)) {
-        throw new Error('Ethereum RPC Server errors must provide single object argument.');
+        throw new Error('Ethereum RPC Server errors MUST provide single object argument.');
       }
       const { code } = opts;
       if (!Number.isInteger(code) || code > -32005 || code < -32099) {
@@ -173,7 +229,7 @@ export const ethErrors = {
 
       if (!message || typeof message !== 'string') {
         throw new Error(
-          '"message" must be a nonempty string',
+          '"message" MUST be a nonempty string',
         );
       }
       return new EthereumProviderError(code, message, data);
