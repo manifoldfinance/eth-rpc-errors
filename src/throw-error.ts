@@ -15,6 +15,6 @@ const gitRepo = 'https://github.com/manifoldfinance/eth-rpc-errors';
  *
  */
 
-export default function ThrowError(code, error) {
+export function ThrowError(code, error) {
   throw `${code}: ${error}\n\nMore details: ${gitRepo}/blob/master/docs/Errors.md#${code.toLowerCase()}`;
 }

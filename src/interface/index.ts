@@ -82,6 +82,7 @@ export type ErrorCode =
   | 'UNCONFIGURED_NAME'
   | 'OFFCHAIN_FAULT';
 
+ // @ts-ignore
 export interface EthersError<T extends ErrorCode = ErrorCode> extends Error {
   code: ErrorCode;
   //    recover?: (...args: Array<any>) => any;

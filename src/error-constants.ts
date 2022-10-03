@@ -6,49 +6,49 @@
 
 interface ErrorCodes {
   readonly rpc: {
-    readonly invalidInput: -32_000;
-    readonly resourceNotFound: -32_001;
+    readonly invalidInput       : -32_000;
+    readonly resourceNotFound   : -32_001;
     readonly resourceUnavailable: -32_002;
     readonly transactionRejected: -32_003;
-    readonly methodNotSupported: -32_004;
-    readonly limitExceeded: -32_005;
-    readonly parse: -32_700;
-    readonly invalidRequest: -32_600;
-    readonly methodNotFound: -32_601;
-    readonly invalidParams: -32_602;
-    readonly internal: -32_603;
+    readonly methodNotSupported : -32_004;
+    readonly limitExceeded      : -32_005;
+    readonly parse              : -32_700;
+    readonly invalidRequest     : -32_600;
+    readonly methodNotFound     : -32_601;
+    readonly invalidParams      : -32_602;
+    readonly internal           : -32_603;
   };
   readonly provider: {
     readonly userRejectedRequest: 4001;
-    readonly unauthorized: 4100;
-    readonly unsupportedMethod: 4200;
-    readonly disconnected: 4900;
-    readonly chainDisconnected: 4901;
+    readonly unauthorized       : 4100;
+    readonly unsupportedMethod  : 4200;
+    readonly disconnected       : 4900;
+    readonly chainDisconnected  : 4901;
   };
 }
 
 export const errorCodes: ErrorCodes = {
   rpc: {
-    invalidInput: -32_000,
-    resourceNotFound: -32_001,
+    invalidInput       : -32_000,
+    resourceNotFound   : -32_001,
     resourceUnavailable: -32_002,
     transactionRejected: -32_003,
-    methodNotSupported: -32_004,
-    limitExceeded: -32_005,
-    parse: -32_700,
-    invalidRequest: -32_600,
-    methodNotFound: -32_601,
-    invalidParams:
+    methodNotSupported : -32_004,
+    limitExceeded      : -32_005,
+    parse              : -32_700,
+    invalidRequest     : -32_600,
+    methodNotFound     : -32_601,
+    invalidParams      : 
       -32_602 /* Invalid transaction envelope type: specified type \"0x02\" but including maxFeePerGas and maxPriorityFeePerGas requires type: \"0x2\"", data: None })) */,
     internal:
       -32_603 /* Cannot read properties of undefined (reading 'message', data: Some(Object({"originalError": Object({}) })) */,
   },
   provider: {
     userRejectedRequest: 4001,
-    unauthorized: 4100, // UNAUTHORIZED
-    unsupportedMethod: 4200, // UNSUPPORTEDMETHOD
-    disconnected: 4900,
-    chainDisconnected: 4901,
+    unauthorized       : 4100, // UNAUTHORIZED
+    unsupportedMethod  : 4200, // UNSUPPORTEDMETHOD
+    disconnected       : 4900,
+    chainDisconnected  : 4901,
   },
 };
 
@@ -58,8 +58,7 @@ export const errorValues = {
   '-32700': {
     PARSE_ERROR: {
       standard: 'JSON RPC 2.0',
-      message:
-        'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.',
+      message: 'Invalid JSON was received by the server. An error occurred on the server while parsing the JSON text.',
     },
   },
   '-32600': {

@@ -42,6 +42,10 @@ export interface ErrorObject {
   message: ErrorObjectMessage;
   data?: ErrorObjectData;
 }
+
+// FIXME - temp fix
+type ReferenceObject = /*unresolved*/ any
+
 export type ErrorOrReference = ErrorObject | ReferenceObject;
 
 /**

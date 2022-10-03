@@ -1,6 +1,7 @@
 import { errorCodes, errorValues } from './error-constants';
 import { EthereumRpcError } from './classes';
 import type { SerializedEthereumRpcError } from './classes';
+import type { ErrorObjectMessage } from './errors';
 
 const FALLBACK_ERROR_CODE = errorCodes.rpc.internal;
 const FALLBACK_MESSAGE = 'Unspecified error message. This is a bug, please report it.';
@@ -25,7 +26,8 @@ export function getMessageFromCode(
     const codeString = code.toString();
 
     if (hasKey(errorValues, codeString)) {
-      return errorValues[codeString as ErrorValueKey].message;
+      // @ts-ignore
+      return errorValues[codeString as ErrorValueKey].message
     }
     if (isJsonRpcServerError(code)) {
       return JSON_RPC_SERVER_ERROR_MESSAGE;
