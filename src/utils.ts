@@ -1,5 +1,7 @@
 import { errorCodes, errorValues } from './error-constants';
-import { EthereumRpcError, SerializedEthereumRpcError } from './classes';
+import { EthereumRpcError } from './classes';
+import type { SerializedEthereumRpcError } from './classes';
+import type { ErrorObjectMessage } from './errors';
 
 const FALLBACK_ERROR_CODE = errorCodes.rpc.internal;
 const FALLBACK_MESSAGE = 'Unspecified error message. This is a bug, please report it.';
@@ -24,7 +26,8 @@ export function getMessageFromCode(
     const codeString = code.toString();
 
     if (hasKey(errorValues, codeString)) {
-      return errorValues[codeString as ErrorValueKey].message;
+      // @ts-ignore
+      return errorValues[codeString as ErrorValueKey].message
     }
     if (isJsonRpcServerError(code)) {
       return JSON_RPC_SERVER_ERROR_MESSAGE;
@@ -61,20 +64,14 @@ export function isValidCode(code: number): boolean {
  */
 export function serializeError(
   error: unknown,
-  {
-    fallbackError = FALLBACK_ERROR,
-    shouldIncludeStack = false,
-  } = {},
+  { fallbackError = FALLBACK_ERROR, shouldIncludeStack = false } = {},
 ): SerializedEthereumRpcError {
-
   if (
     !fallbackError ||
     !Number.isInteger(fallbackError.code) ||
     typeof fallbackError.message !== 'string'
   ) {
-    throw new Error(
-      'Must provide fallback error with integer number code and string message.',
-    );
+    throw new Error('Must provide fallback error with integer number code and string message.');
   }
 
   if (error instanceof EthereumRpcError) {
@@ -100,9 +97,7 @@ export function serializeError(
         serialized.data = _error.data;
       }
     } else {
-      serialized.message = getMessageFromCode(
-        (serialized as SerializedEthereumRpcError).code,
-      );
+      serialized.message = getMessageFromCode((serialized as SerializedEthereumRpcError).code);
 
       serialized.data = { originalError: assignOriginalError(error) };
     }
@@ -111,11 +106,7 @@ export function serializeError(
 
     const message = (error as any)?.message;
 
-    serialized.message = (
-      message && typeof message === 'string'
-        ? message
-        : fallbackError.message
-    );
+    serialized.message = message && typeof message === 'string' ? message : fallbackError.message;
     serialized.data = { originalError: assignOriginalError(error) };
   }
 
