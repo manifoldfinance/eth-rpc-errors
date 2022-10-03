@@ -1,9 +1,9 @@
-/** 
+/**
  * @since v1.0.0
  * @version Errors.1.0.0
-*/
+ */
 
-const gitRepo = 'https://github.com/manifoldfinance/eth-rpc-errors'
+const gitRepo = 'https://github.com/manifoldfinance/eth-rpc-errors';
 
 /*
  * Throws an error with a code and description.
@@ -18,4 +18,3 @@ const gitRepo = 'https://github.com/manifoldfinance/eth-rpc-errors'
 export default function ThrowError(code, error) {
   throw `${code}: ${error}\n\nMore details: ${gitRepo}/blob/master/docs/Errors.md#${code.toLowerCase()}`;
 }
-
